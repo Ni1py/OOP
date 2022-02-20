@@ -25,7 +25,7 @@ std::optional<Args> ParseArgs(int argc, char* argv[])
 	return args;
 }
 
-void CopyStreams(ifstream & input, ofstream & output)
+void CopyStreams(ifstream& input, ofstream& output)
 {
 	//копируем содержимое входного файла в выходной 
 	char ch;
