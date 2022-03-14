@@ -8,11 +8,15 @@ if %MyProgram%=="" (
 )
 
 REM обработка недостающих аргументов
-%MyProgram% && goto err
+%MyProgram% > "%TEMP%\output1.txt"
+fc.exe "tests\invalid_count.txt" "%TEMP%\output1.txt"
+IF NOT ERRORLEVEL 0 goto err
 echo Test 1 passed
 
 REM обработка ошибки несуществующего входного файла
-%MyProgram% input1.txt "%TEMP%\output.txt" a ab && goto err
+%MyProgram% input1.txt "%TEMP%\output.txt" a ab > "%TEMP%\output1.txt"
+fc.exe "tests\error_open.txt" "%TEMP%\output1.txt"
+IF NOT ERRORLEVEL 0 goto err
 echo Test 2 passed
 
 REM замена пар

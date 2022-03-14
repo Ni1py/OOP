@@ -1,4 +1,6 @@
 ﻿#include <iostream>
+#include <string>
+#include <sstream>
 
 unsigned int FlipByte(unsigned int bit)
 {
@@ -13,14 +15,28 @@ unsigned int FlipByte(unsigned int bit)
 	return bits_flip;
 }
 
-int main()
+int main(int argc, char* argv[])
 {
-	std::cout << "This program changes the order of binary bits to the opposite in an 8-bit decimal integer!\n" << std::endl;
-	std::cout << "Enter an 8-bit decimal integer: ";
-	unsigned int bits = 0;
-	std::cin >> bits;
+	if (argc != 2)
+	{
+		std::cout << "Invalid argument count!\n";
+		return 1;
+	}
 
-	if (!std::cin)
+	if (!std::strlen(argv[1]))
+	{
+		std::cout << "Invalid argument value!\n";
+		return 1;
+	}
+
+	unsigned int bits = 0;
+	std::string str;
+	str = argv[1];
+
+	std::stringstream ss;
+	ss << str;
+	ss >> bits;
+	if (ss.fail())
 	{
 		std::cout << "You have entered the text! Enter a decimal integer!\n";
 		return 1;
@@ -34,5 +50,5 @@ int main()
 
 	std::cout << FlipByte(bits) << "\n";
 
-	return FlipByte(bits);
+	return 0;
 }

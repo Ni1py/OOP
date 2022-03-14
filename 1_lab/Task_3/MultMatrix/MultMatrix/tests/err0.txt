@@ -1,0 +1,2 @@
+Invalid argument count!
+Usage: multmatrix.exe <matrix_file1> <matrix_file2>

@@ -54,7 +54,7 @@ std::optional<Args> ParseArgs(int argc, char* argv[])
 {
 	if (argc != 5)
 	{
-		std::cout << "Invalid argument count\n"
+		std::cout << "Invalid argument count!\n"
 			<< "Usage: replace.exe <inputFile> <outputFile> <searchString> <replacementString>\n";
 		return std::nullopt;
 	}

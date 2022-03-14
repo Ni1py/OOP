@@ -1,27 +1,61 @@
 ﻿#include <iostream>
-#include <stdio.h>
+#include <fstream>
+#include <sstream>
+#include <string>
 #include <optional>
+#include <cmath>
+#include <iomanip>
 
-void ReadMatrix(FILE* input, float Matrix3x3[3][3])
+const int bit_depth = 3;
+const std::string err_argument = "Invalid argument!";
+const std::string err_count = "Invalid argument count!";
+const std::string usage = "Usage: multmatrix.exe <matrix_file1> <matrix_file2>";
+const std::string err_text_part1 = "Please enter: ";
+const std::string err_text_part2 = "<float> <float> <float>";
+const std::string err_open = "Failed to open '";
+const std::string err_reading = "' for reading!";
+const std::string err_read_data = "Failed to read data from input file!";
+
+int ReadMatrix(std::istream& input, float Matrix3x3[3][3])
 {
-	for (int i = 0; i < 3; i++)
+	std::string str;
+	std::stringstream ss;
+	size_t i = 0;
+	size_t j = 0;
+
+	while (getline(input, str))
 	{
-		for (int j = 0; j < 3; j++)
+		ss.clear();
+		ss.str(str);
+		while (!ss.eof())
 		{
-			fscanf_s(input, "%f", &Matrix3x3[i][j]);
+			ss >> Matrix3x3[i][j];
+			if (ss.fail())
+			{
+				std::cout << err_argument << "\n";
+				std::cout << err_text_part1  << err_text_part2  << "\n";
+				std::cout << "              " << err_text_part2 << "\n";
+				std::cout << "              " << err_text_part2 << "\n";
+				return 1;
+			}
+			++j;
 		}
+		j = 0;
+		++i;
 	}
+
+	return 0;
 }
 
-void MultiplyMatrix(float FirstMatrix3x3[3][3], float SecondMatrix3x3[3][3], float ResultMatrix3x3[3][3])
+void MultiplyMatrix(float FirstMatrix3x3[bit_depth][bit_depth], float SecondMatrix3x3[bit_depth][bit_depth], float ResultMatrix3x3[bit_depth][bit_depth])
 {
-	for (int i = 0; i < 3; i++)
+	for (int i = 0; i < bit_depth; i++)
 	{
-		for (int j = 0; j < 3; j++)
+		for (int j = 0; j < bit_depth; j++)
 		{
-			for (int k = 0; k < 3; k++)
+			for (int k = 0; k < bit_depth; k++)
 			{
-				ResultMatrix3x3[i][j] += FirstMatrix3x3[i][k] * SecondMatrix3x3[k][j];
+				ResultMatrix3x3[i][j] += round(FirstMatrix3x3[i][k] * 1000) / 1000 * round(SecondMatrix3x3[k][j] * 1000) / 1000;
 			}
 		}
 	}
@@ -29,16 +63,16 @@ void MultiplyMatrix(float FirstMatrix3x3[3][3], float SecondMatrix3x3[3][3], flo
 
 struct Args
 {
-	char* matrix_file1;
-	char* matrix_file2;
+	std::string matrix_file1;
+	std::string matrix_file2;
 };
 
 std::optional<Args> ParseArgs(int argc, char* argv[])
 {
-	if (argc != 3)
+	if (argc != bit_depth)
 	{
-		std::cout << "Invalid argument count\n"
-			<< "Usage: multmatrix.exe <matrix_file1> <matrix_file2>\n";
+		std::cout << err_count  << "\n"
+			<< usage << "\n";
 		return std::nullopt;
 	}
 	Args args;
@@ -56,45 +90,50 @@ int main(int argc, char* argv[])
 		return 1;
 	}
 
-	FILE* matrix_file1, * matrix_file2;
-
-	errno_t err;
-	errno_t err1;
-
-	err = fopen_s(&matrix_file1, args->matrix_file1, "r");
-	if (err)
+	std::ifstream matrix_file1;
+	matrix_file1.open(args->matrix_file1);
+	if (!matrix_file1.is_open())
 	{
-		std::cout << "File " << args->matrix_file1 << " was not opened!";
+		std::cout << err_open << args->matrix_file1 << err_reading  << "\n";
 		return 1;
 	}
 
-	err1 = fopen_s(&matrix_file2, args->matrix_file2, "r");
-	if (err1)
+	std::ifstream matrix_file2;
+	matrix_file2.open(args->matrix_file2);
+	if (!matrix_file2.is_open())
 	{
-		std::cout << "File " << args->matrix_file2 << " was not opened!";
+		std::cout << err_open << args->matrix_file2 << err_reading  << "\n";
 		return 1;
 	}
 
-	float FirstMatrix3x3[3][3] = {};
-	ReadMatrix(matrix_file1, FirstMatrix3x3);
+	float FirstMatrix3x3[bit_depth][bit_depth] = {};
+	if (ReadMatrix(matrix_file1, FirstMatrix3x3))
+		return 1;
 
-	float SecondMatrix3x3[3][3] = {};
-	ReadMatrix(matrix_file2, SecondMatrix3x3);
+	float SecondMatrix3x3[bit_depth][bit_depth] = {};
+	if (ReadMatrix(matrix_file2, SecondMatrix3x3))
+		return 1;
 
-	float ResultMatrix3x3[3][3] = {};
+	if (matrix_file1.bad() || matrix_file2.bad())
+	{
+		std::cout << err_read_data  << "\n";
+		return 1;
+	}
+
+	float ResultMatrix3x3[bit_depth][bit_depth] = {};
 	MultiplyMatrix(FirstMatrix3x3, SecondMatrix3x3, ResultMatrix3x3);
 
-	for (int i = 0; i < 3; i++)
+	for (int i = 0; i < bit_depth; i++)
 	{
-		for (int j = 0; j < 3; j++)
+		for (int j = 0; j < bit_depth; j++)
 		{
-			if (j != 2)
+			if (j != bit_depth - 1)
 			{
-				std::cout << ResultMatrix3x3[i][j] << " ";
+				std::cout << std::fixed << std::setprecision(3) << ResultMatrix3x3[i][j] << " ";
 			}
 			else
 			{
-				std::cout << ResultMatrix3x3[i][j] << std::endl;
+				std::cout << std::fixed << std::setprecision(3) << ResultMatrix3x3[i][j] << "\n";
 			}
 		}
 	}
