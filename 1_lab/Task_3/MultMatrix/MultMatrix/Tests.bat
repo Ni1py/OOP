@@ -1,4 +1,11 @@
+@echo off
+
 SET MyProgram="%~1"
+
+if %MyProgram%=="" (
+	echo Please specify path to program
+	exit /B 1
+)
 
 REM Обработка ошибки 1 аргумента во входной строке
 echo Handling the error of 1 argument in the input string

@@ -2,6 +2,12 @@
 #include <string>
 #include <sstream>
 
+const std::string err_count = "Invalid argument count!";
+const std::string usage = "Usage: FlipByte.exe <unsigned int>";
+const std::string err_value = "Invalid argument value!";
+const std::string err_text = "You have entered the text! Enter a decimal integer!";
+const std::string err_limit = "You have entered a number beyond 0-255!";
+
 unsigned int FlipByte(unsigned int bit)
 {
 	unsigned int bits_flip = 0;
@@ -19,13 +25,14 @@ int main(int argc, char* argv[])
 {
 	if (argc != 2)
 	{
-		std::cout << "Invalid argument count!\n";
+		std::cout << err_count << "\n"
+			<< usage << "\n";
 		return 1;
 	}
 
 	if (!std::strlen(argv[1]))
 	{
-		std::cout << "Invalid argument value!\n";
+		std::cout << err_value << "\n";
 		return 1;
 	}
 
@@ -38,13 +45,13 @@ int main(int argc, char* argv[])
 	ss >> bits;
 	if (ss.fail())
 	{
-		std::cout << "You have entered the text! Enter a decimal integer!\n";
+		std::cout << err_text << "\n";
 		return 1;
 	}
 
 	if (!((bits >= 0) && (bits <= 255)))
 	{
-		std::cout << "You have entered a number beyond 0-255!\n";
+		std::cout << err_limit << "\n";
 		return 1;
 	}
 

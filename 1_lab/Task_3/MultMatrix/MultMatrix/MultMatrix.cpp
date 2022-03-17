@@ -9,7 +9,7 @@
 const int bit_depth = 3;
 const std::string err_argument = "Invalid argument!";
 const std::string err_count = "Invalid argument count!";
-const std::string usage = "Usage: multmatrix.exe <matrix_file1> <matrix_file2>";
+const std::string usage = "Usage: MultMatrix.exe <matrix_file1> <matrix_file2>";
 const std::string err_text_part1 = "Please enter: ";
 const std::string err_text_part2 = "<float> <float> <float>";
 const std::string err_open = "Failed to open '";
@@ -47,7 +47,8 @@ int ReadMatrix(std::istream& input, float Matrix3x3[3][3])
 	return 0;
 }
 
-void MultiplyMatrix(float FirstMatrix3x3[bit_depth][bit_depth], float SecondMatrix3x3[bit_depth][bit_depth], float ResultMatrix3x3[bit_depth][bit_depth])
+void MultiplyMatrix(float FirstMatrix3x3[bit_depth][bit_depth], float SecondMatrix3x3[bit_depth][bit_depth], 
+	float ResultMatrix3x3[bit_depth][bit_depth])
 {
 	for (int i = 0; i < bit_depth; i++)
 	{
@@ -55,7 +56,7 @@ void MultiplyMatrix(float FirstMatrix3x3[bit_depth][bit_depth], float SecondMatr
 		{
 			for (int k = 0; k < bit_depth; k++)
 			{
-				ResultMatrix3x3[i][j] += round(FirstMatrix3x3[i][k] * 1000) / 1000 * round(SecondMatrix3x3[k][j] * 1000) / 1000;
+				ResultMatrix3x3[i][j] += FirstMatrix3x3[i][k] * SecondMatrix3x3[k][j];
 			}
 		}
 	}
