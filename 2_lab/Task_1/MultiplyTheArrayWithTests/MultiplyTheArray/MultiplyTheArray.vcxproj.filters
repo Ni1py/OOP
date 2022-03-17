@@ -21,15 +21,9 @@
     <ClCompile Include="EnterAnArray.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="OutputAnArray.cpp">
-      <Filter>Исходные файлы</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="EnterAnArray.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
-    <ClInclude Include="OutputAnArray.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
   </ItemGroup>

@@ -3,8 +3,8 @@
 #include <algorithm>
 #include <string>
 #include <cmath>
+#include <iomanip>
 #include "EnterAnArray.h"
-#include "OutputAnArray.h"
 
 float FindTheSmallestElement(const std::vector<float>& arrayOfFloat)
 {
@@ -25,6 +25,21 @@ void MultiplyTheArrayByTheSmallestElement(std::vector<float>& arrayOfFloat)
 	for (size_t i = 0; i < arrayOfFloat.size(); i++)
 	{
 		arrayOfFloat[i] = round(arrayOfFloat[i] * 1000) / 1000 * min;
+	}
+}
+
+void OutputAnArray(std::vector<float>& arrayOfFloat)
+{
+	for (auto& p : arrayOfFloat)
+	{
+		if (p != arrayOfFloat[arrayOfFloat.size() - 1])
+		{
+			std::cout << std::fixed << std::setprecision(3) << p << " ";
+		}
+		else
+		{
+			std::cout << std::fixed << std::setprecision(3) << p << "\n";
+		}
 	}
 }
 
