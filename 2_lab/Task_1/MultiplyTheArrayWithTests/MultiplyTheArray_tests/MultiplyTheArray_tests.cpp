@@ -4,8 +4,10 @@
 #include "../../../../catch2/catch.hpp"
 
 #include "../MultiplyTheArray/EnterAnArray.h"
+#include "../MultiplyTheArray/FindTheSmallestElement.h"
+#include "../MultiplyTheArray/MultiplyTheArrayByTheSmallestElement.h"
 
-SCENARIO("EnterAnArray")
+SCENARIO("Function EnterAnArray")
 {
 	WHEN("Enter an empty line")
 	{
@@ -46,6 +48,70 @@ SCENARIO("EnterAnArray")
 		THEN("These numbers appear in the vector")
 		{
 			REQUIRE(arrayOfFloat == _arrayOfFloat);
+		}
+	}
+}
+
+SCENARIO("Function FindTheSmallestElement")
+{
+	WHEN("Vector with the smallest element 0")
+	{
+		std::vector<float> arrayOfFloat = { 5.678, 45, 0 };
+
+		THEN("The minimum element is 0")
+		{
+			float min = 0;
+			REQUIRE(FindTheSmallestElement(arrayOfFloat) == min);
+		}
+	}
+
+	WHEN("Vector with the smallest element -1")
+	{
+		std::vector<float> arrayOfFloat = { 5.678, -1, 0 };
+
+		THEN("The minimum element is -1")
+		{
+			float min = -1;
+			REQUIRE(FindTheSmallestElement(arrayOfFloat) == min);
+		}
+	}
+}
+
+SCENARIO("Function MultiplyTheArrayByTheSmallestElement")
+{
+	WHEN("Vector with the smallest element 0")
+	{
+		std::vector<float> arrayOfFloat = { 5.678, 45, 0 };
+
+		THEN("All elements of the vector are equal to 0")
+		{
+			MultiplyTheArrayByTheSmallestElement(arrayOfFloat);
+			std::vector<float> zeroVector = { 0, 0, 0 };
+			CHECK(arrayOfFloat == zeroVector);
+		}
+	}
+
+	WHEN("Vector with the smallest element -1")
+	{
+		std::vector<float> arrayOfFloat = { 5.678, -1, 5, -0.5 };
+
+		THEN("All elements with an inverted sign")
+		{
+			MultiplyTheArrayByTheSmallestElement(arrayOfFloat);
+			std::vector<float> invertVector = { -5.678, 1, -5, 0.5 };
+			CHECK(arrayOfFloat == invertVector);
+		}
+	}
+
+	WHEN("Vector with the smallest element 2")
+	{
+		std::vector<float> arrayOfFloat = { 5.678, 10, 3.2, 2 };
+
+		THEN("All elements are increased by 2 times")
+		{
+			MultiplyTheArrayByTheSmallestElement(arrayOfFloat);
+			std::vector<float> doubledVector = { 5.678 * 2, 10 * 2, 3.2 * 2, 2 * 2 };
+			CHECK(arrayOfFloat == doubledVector);
 		}
 	}
 }

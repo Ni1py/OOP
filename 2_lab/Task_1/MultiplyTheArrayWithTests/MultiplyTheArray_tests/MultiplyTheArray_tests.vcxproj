@@ -152,10 +152,14 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\MultiplyTheArray\EnterAnArray.cpp" />
+    <ClCompile Include="..\MultiplyTheArray\FindTheSmallestElement.cpp" />
+    <ClCompile Include="..\MultiplyTheArray\MultiplyTheArrayByTheSmallestElement.cpp" />
     <ClCompile Include="MultiplyTheArray_tests.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\MultiplyTheArray\EnterAnArray.h" />
+    <ClInclude Include="..\MultiplyTheArray\FindTheSmallestElement.h" />
+    <ClInclude Include="..\MultiplyTheArray\MultiplyTheArrayByTheSmallestElement.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -4,29 +4,11 @@
 #include <string>
 #include <cmath>
 #include <iomanip>
+
 #include "EnterAnArray.h"
+#include "MultiplyTheArrayByTheSmallestElement.h"
 
-float FindTheSmallestElement(const std::vector<float>& arrayOfFloat)
-{
-	float min = arrayOfFloat[0];
-	for (auto& p : arrayOfFloat)
-	{
-		if (p < min)
-		{
-			min = p;
-		}
-	}
-	return min;
-}
-
-void MultiplyTheArrayByTheSmallestElement(std::vector<float>& arrayOfFloat)
-{
-	float min = round(FindTheSmallestElement(arrayOfFloat) * 1000) / 1000;
-	for (size_t i = 0; i < arrayOfFloat.size(); i++)
-	{
-		arrayOfFloat[i] = round(arrayOfFloat[i] * 1000) / 1000 * min;
-	}
-}
+const std::string enter = "Enter the array elements separated by a space: ";
 
 void OutputAnArray(std::vector<float>& arrayOfFloat)
 {
@@ -46,7 +28,7 @@ void OutputAnArray(std::vector<float>& arrayOfFloat)
 int main()
 {
 	std::vector<float> arrayOfFloat = {};
-	std::cout << "Enter the array elements separated by a space: ";
+	std::cout << enter;
 	std::string str;
 	std::getline(std::cin, str);
 	if (EnterAnArray(str, arrayOfFloat))

@@ -21,9 +21,21 @@
     <ClCompile Include="..\MultiplyTheArray\EnterAnArray.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
+    <ClCompile Include="..\MultiplyTheArray\FindTheSmallestElement.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="..\MultiplyTheArray\MultiplyTheArrayByTheSmallestElement.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\MultiplyTheArray\EnterAnArray.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="..\MultiplyTheArray\FindTheSmallestElement.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="..\MultiplyTheArray\MultiplyTheArrayByTheSmallestElement.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
   </ItemGroup>

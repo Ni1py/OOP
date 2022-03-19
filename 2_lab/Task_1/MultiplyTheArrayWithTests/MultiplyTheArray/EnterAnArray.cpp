@@ -2,6 +2,9 @@
 #include <iostream>
 #include <sstream>
 
+const std::string err_argument = "Invalid argument!";
+const std::string usage = "Usage: <float> <float>...";
+
 int EnterAnArray(const std::string& str, std::vector<float>& arrayOfFloat)
 {
 	{
@@ -15,8 +18,8 @@ int EnterAnArray(const std::string& str, std::vector<float>& arrayOfFloat)
 			ss >> f;
 			if (ss.fail())
 			{
-				std::cout << "Invalid argument!\n";
-				std::cout << "Please enter: <float> <float>...\n";
+				std::cout << err_argument << "\n"
+					<< usage << "\n";
 				return 1;
 			}
 			arrayOfFloat.push_back(f);
