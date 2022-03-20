@@ -19,6 +19,12 @@ const HTML entities =
 	"&amp;"
 };
 
+const char doubleQuote = '\"';
+const char apostrophe = '\'';
+const char signLess = '<';
+const char signMore = '>';
+const char ampersand = '&';
+
 std::string HtmlEncode(const std::string& text)
 {
 	std::string strResult;
@@ -26,19 +32,19 @@ std::string HtmlEncode(const std::string& text)
 	{
 		switch (text[i])
 		{
-		case '\"':
+		case doubleQuote:
 			strResult.append(entities.doubleQuote);
 			break;
-		case '\'':
+		case apostrophe:
 			strResult.append(entities.apostrophe);
 			break;
-		case '<':
+		case signLess:
 			strResult.append(entities.signLess);
 			break;
-		case '>':
+		case signMore:
 			strResult.append(entities.signMore);
 			break;
-		case '&':
+		case ampersand:
 			strResult.append(entities.ampersand);
 			break;
 		default:
@@ -51,6 +57,7 @@ std::string HtmlEncode(const std::string& text)
 void HtmlEncodeLines(std::istream& input, std::ostream& output)
 {
 	std::string str;
+
 	while (std::getline(input, str))
 	{
 		output << HtmlEncode(str) << "\n";

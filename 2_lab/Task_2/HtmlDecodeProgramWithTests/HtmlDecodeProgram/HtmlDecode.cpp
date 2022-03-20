@@ -1,3 +1,4 @@
+#include <iostream>
 #include "HtmlDecode.h"
 
 struct HTML
@@ -28,7 +29,7 @@ const std::string ampersandHtml = "&amp;";
 
 std::string HtmlDecode(const std::string& html)
 {
-	std::string HTMLentities;
+	std::string htmlEntities;
 	std::string strResult;
 	bool flag = false;
 
@@ -44,33 +45,49 @@ std::string HtmlDecode(const std::string& html)
 		}
 		else
 		{
-			HTMLentities.append(html, i, 1);
+			htmlEntities.append(html, i, 1);
 		}
 		if (html[i] == semicolon)
 		{
 			flag = false;
-			if (HTMLentities == doubleQuote)
+			if (htmlEntities == doubleQuote)
 			{
 				strResult.append(decodeEntities.doubleQuote);
 			}
-			else if (HTMLentities == apostrophe)
+			else if (htmlEntities == apostrophe)
 			{
 				strResult.append(decodeEntities.apostrophe);
 			}
-			else if (HTMLentities == signLess)
+			else if (htmlEntities == signLess)
 			{
 				strResult.append(decodeEntities.signLess);
 			}
-			else if (HTMLentities == signMore)
+			else if (htmlEntities == signMore)
 			{
 				strResult.append(decodeEntities.signMore);
 			}
-			else if (HTMLentities == ampersandHtml)
+			else if (htmlEntities == ampersandHtml)
 			{
 				strResult.append(decodeEntities.ampersand);
 			}
-			HTMLentities.clear();
+			else
+			{
+				strResult.append(htmlEntities);
+			}
+			htmlEntities.clear();
 		}
 	}
+	strResult.append(htmlEntities);
+
 	return strResult;
+}
+
+void HtmlDecodeLines(std::istream& input, std::ostream& output)
+{
+	std::string str;
+
+	while (std::getline(input, str))
+	{
+		output << HtmlDecode(str) << "\n";
+	}
 }
