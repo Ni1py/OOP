@@ -39,6 +39,18 @@ SCENARIO("Function HtmlDecode")
 			CHECK(HtmlDecode(line) == resultLine);
 		}
 	}
+
+	WHEN("Enter the line: &lt&amp;")
+	{
+		std::string line = "&lt&amp;";
+
+		THEN("The resulting line: &lt&")
+		{
+			std::string resultLine = "&lt&";
+
+			CHECK(HtmlDecode(line) == resultLine);
+		}
+	}
 }
 
 SCENARIO("Function HtmlDecodeLines")

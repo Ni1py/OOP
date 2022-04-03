@@ -1,83 +1,67 @@
 #include <iostream>
+#include <map>
+#include <vector>
+#include <algorithm>
 #include "HtmlDecode.h"
 
-struct HTML
-{
-	std::string doubleQuote;
-	std::string apostrophe;
-	std::string signLess;
-	std::string signMore;
-	std::string ampersand;
+std::map <std::string, std::string> htmlDecode = 
+{ 
+	{"&quot;", "\""},
+	{"&apos;", "\'"},
+	{"&lt;", "<"},
+	{"&gt;", ">"},
+	{"&amp;", "&"}
 };
 
-const HTML decodeEntities =
+struct htmlInStr
 {
-	"\"",
-	"\'",
-	"<",
-	">",
-	"&"
+	size_t pos;
+	std::string html;
 };
 
-const char ampersand = '&';
-const char semicolon = ';';
-const std::string doubleQuote = "&quot;";
-const std::string apostrophe = "&apos;";
-const std::string signLess = "&lt;";
-const std::string signMore = "&gt;";
-const std::string ampersandHtml = "&amp;";
+bool compare(htmlInStr a, htmlInStr b)
+{
+	return a.pos < b.pos;
+}
 
 std::string HtmlDecode(const std::string& html)
 {
-	std::string htmlEntities;
-	std::string strResult;
+	std::string strResult = "";
+	std::string searchString = "";
 	bool flag = false;
+	std::vector<htmlInStr> allHtml = {};
 
-	for (size_t i = 0; i < html.size(); i++)
-	{
-		if (html[i] == ampersand)
+	size_t pos = 0;
+	while (true)
+	{ 
+		size_t foundPos = 0;
+		for (const auto& code : htmlDecode) 
 		{
-			flag = true;
+			foundPos = html.find(code.first, pos);
+			if (foundPos != std::string::npos)
+			{
+				htmlInStr object;
+				object.pos = foundPos;
+				object.html = code.first;
+				allHtml.push_back(object);
+			}
 		}
-		if (!flag)
+
+		if (!allHtml.empty())
 		{
-			strResult.append(html, i, 1);
+			std::sort(allHtml.begin(), allHtml.end(), compare);
+			auto searchString = allHtml[0];
+			strResult.append(html, pos, searchString.pos - pos);
+			strResult.append(htmlDecode[searchString.html]);
+			pos = searchString.pos + searchString.html.length();
+			allHtml.clear();
 		}
 		else
 		{
-			htmlEntities.append(html, i, 1);
-		}
-		if (html[i] == semicolon)
-		{
-			flag = false;
-			if (htmlEntities == doubleQuote)
-			{
-				strResult.append(decodeEntities.doubleQuote);
-			}
-			else if (htmlEntities == apostrophe)
-			{
-				strResult.append(decodeEntities.apostrophe);
-			}
-			else if (htmlEntities == signLess)
-			{
-				strResult.append(decodeEntities.signLess);
-			}
-			else if (htmlEntities == signMore)
-			{
-				strResult.append(decodeEntities.signMore);
-			}
-			else if (htmlEntities == ampersandHtml)
-			{
-				strResult.append(decodeEntities.ampersand);
-			}
-			else
-			{
-				strResult.append(htmlEntities);
-			}
-			htmlEntities.clear();
+			strResult.append(html, pos, html.length() - pos);
+			break;
 		}
 	}
-	strResult.append(htmlEntities);
 
 	return strResult;
 }
