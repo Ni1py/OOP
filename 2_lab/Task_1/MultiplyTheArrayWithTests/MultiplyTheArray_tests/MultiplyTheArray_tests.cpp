@@ -52,31 +52,6 @@ SCENARIO("Function EnterAnArray")
 	}
 }
 
-SCENARIO("Function FindTheSmallestElement")
-{
-	WHEN("Vector with the smallest element 0")
-	{
-		std::vector<float> arrayOfFloat = { 5.678, 45, 0 };
-
-		THEN("The minimum element is 0")
-		{
-			float min = 0;
-			REQUIRE(FindTheSmallestElement(arrayOfFloat) == min);
-		}
-	}
-
-	WHEN("Vector with the smallest element -1")
-	{
-		std::vector<float> arrayOfFloat = { 5.678, -1, 0 };
-
-		THEN("The minimum element is -1")
-		{
-			float min = -1;
-			REQUIRE(FindTheSmallestElement(arrayOfFloat) == min);
-		}
-	}
-}
-
 SCENARIO("Function MultiplyTheArrayByTheSmallestElement")
 {
 	WHEN("Vector with the smallest element 0")

@@ -140,13 +140,11 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="EnterAnArray.cpp" />
-    <ClCompile Include="FindTheSmallestElement.cpp" />
     <ClCompile Include="MultiplyTheArray.cpp" />
     <ClCompile Include="MultiplyTheArrayByTheSmallestElement.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="EnterAnArray.h" />
-    <ClInclude Include="FindTheSmallestElement.h" />
     <ClInclude Include="MultiplyTheArrayByTheSmallestElement.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
