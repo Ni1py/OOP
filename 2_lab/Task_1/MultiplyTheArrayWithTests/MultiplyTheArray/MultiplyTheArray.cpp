@@ -4,26 +4,12 @@
 #include <string>
 #include <cmath>
 #include <iomanip>
+#include <iterator>
 
 #include "EnterAnArray.h"
 #include "MultiplyTheArrayByTheSmallestElement.h"
 
 const std::string enter = "Enter the array elements separated by a space: ";
-
-void OutputAnArray(std::vector<float>& arrayOfFloat)
-{
-	for (auto& p : arrayOfFloat)
-	{
-		if (p != arrayOfFloat[arrayOfFloat.size() - 1])
-		{
-			std::cout << std::fixed << std::setprecision(3) << p << " ";
-		}
-		else
-		{
-			std::cout << std::fixed << std::setprecision(3) << p << "\n";
-		}
-	}
-}
 
 int main()
 {
@@ -38,7 +24,8 @@ int main()
 
 	std::sort(arrayOfFloat.begin(), arrayOfFloat.end());
 
-	OutputAnArray(arrayOfFloat);
+	std::cout << std::fixed << std::setprecision(3);
+	std::copy(arrayOfFloat.begin(), arrayOfFloat.end(), std::ostream_iterator<float>(std::cout, " "));
 
 	return 0;
 }
