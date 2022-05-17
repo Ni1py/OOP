@@ -2,6 +2,15 @@
 #include <string>
 #include <iostream>
 
+int Limit[6][2]{
+	{0, 20},
+	{0, 30},
+	{20, 50},
+	{30, 60},
+	{30, 90},
+	{50, 150}
+};
+
 CCar::CCar()
 	:m_statusEngine(false),
 	m_direction(Direction::standing),
@@ -36,22 +45,16 @@ bool CCar::IsSetDirection(int gear) const
 	switch (gear)
 	{
 	case -1:
-		return ((m_direction == Direction::standing) || (m_direction == Direction::back));
+		return ((m_direction == Direction::back) || (m_direction == Direction::standing));
 	case 0:
 		return true;
 	case 1:
 		return ((m_direction == Direction::standing) || (m_direction == Direction::forward));
-	case 2:
-		return m_direction == Direction::forward;
-	case 3:
-		return m_direction == Direction::forward;
-	case 4:
-		return m_direction == Direction::forward;
-	case 5:
-		return m_direction == Direction::forward;
-	default:
-		return false;
 	}
+	for (size_t i = 2; i < 6; i++)
+		if (gear == i)
+			return m_direction == Direction::forward;
+	return false;
 }
 
 bool CCar::IsSetGear(int gear) const
@@ -59,22 +62,14 @@ bool CCar::IsSetGear(int gear) const
 	switch (gear)
 	{
 	case -1:
-		return (m_speed == Limit::minSpeedBack && IsTurnedOn());
+		return (m_speed == Limit[0][0] && IsTurnedOn());
 	case 0:
 		return true;
-	case 1:
-		return ((m_speed >= Limit::minSpeed1) && (m_speed <= Limit::maxSpeed1) && IsTurnedOn());
-	case 2:
-		return ((m_speed >= Limit::minSpeed2) && (m_speed <= Limit::maxSpeed2) && IsTurnedOn());
-	case 3:
-		return ((m_speed >= Limit::minSpeed3) && (m_speed <= Limit::maxSpeed3) && IsTurnedOn());
-	case 4:
-		return ((m_speed >= Limit::minSpeed4) && (m_speed <= Limit::maxSpeed4) && IsTurnedOn());
-	case 5:
-		return ((m_speed >= Limit::minSpeed5) && (m_speed <= Limit::maxSpeed5) && IsTurnedOn());
-	default:
-		return false;
 	}
+	for (size_t i = 1; i < 6; i++)
+		if (i == gear)
+			return ((m_speed >= Limit[i][0]) && (m_speed <= Limit[i][1]) && IsTurnedOn());
+	return false;
 }
 
 bool CCar::IsSetSpeed(int speed) const
@@ -82,22 +77,14 @@ bool CCar::IsSetSpeed(int speed) const
 	switch (m_gear)
 	{
 	case -1:
-		return ((speed >= Limit::minSpeedBack) && (speed <= Limit::maxSpeedBack));
+		return ((speed >= Limit[0][0]) && (speed <= Limit[0][1]));
 	case 0:
 		return speed <= m_speed;
-	case 1:
-		return ((speed >= Limit::minSpeed1) && (speed <= Limit::maxSpeed1));
-	case 2:
-		return ((speed >= Limit::minSpeed2) && (speed <= Limit::maxSpeed2));
-	case 3:
-		return ((speed >= Limit::minSpeed3) && (speed <= Limit::maxSpeed3));
-	case 4:
-		return ((speed >= Limit::minSpeed4) && (speed <= Limit::maxSpeed4));
-	case 5:
-		return ((speed >= Limit::minSpeed5) && (speed <= Limit::maxSpeed5));
-	default:
-		return false;
 	}
+	for (size_t i = 1; i < 6; i++)
+		if (i == m_gear)
+			return ((speed >= Limit[i][0]) && (speed <= Limit[i][1]));
+	return false;
 }
 
 bool CCar::TurnOnEngine()

@@ -6,9 +6,11 @@
 class CControlCar
 {
 public:
-	void ShowInfo(CCar const& car);
+	void ShowInfo(const CCar& car);
 	void ControlCar(CCar car);
-	std::string GetDirection(CCar const& car);
-	std::string GerGear(CCar const& car);
+	std::string TextDirection(const CCar& car);
+	std::string TextGear(const CCar& car);
+private:
+	void ToLowStr(string& str);
 };
 

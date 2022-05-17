@@ -49,13 +49,13 @@ const string setgear = "setgear";
 const string setspeed = "setspeed";
 const string exitPoint = "exit.";
 
-void ToLowStr(string& str)
+void CControlCar::ToLowStr(string& str)
 {
 	transform(str.begin(), str.end(), str.begin(), tolower);
 }
 
 
-string CControlCar::GerGear(CCar const& car)
+string CControlCar::TextGear(CCar const& car)
 {
 	switch (car.GetGear())
 	{
@@ -76,7 +76,7 @@ string CControlCar::GerGear(CCar const& car)
 	}
 }
 
-string CControlCar::GetDirection(CCar const& car)
+string CControlCar::TextDirection(CCar const& car)
 {
 	switch (car.GetDirection())
 	{
@@ -93,9 +93,9 @@ void CControlCar::ShowInfo(CCar const& car)
 {
 	cout << "\n";
 	cout << (car.IsTurnedOn() ? engineOn : engineOff) << ".\n";
-	cout << direction << GetDirection(car) << ".\n";
+	cout << direction << TextDirection(car) << ".\n";
 	cout << speed << car.GetSpeed() << ".\n";
-	cout << gear << GerGear(car) << ".\n\n";
+	cout << gear << TextGear(car) << ".\n\n";
 };
 
 void CControlCar::ControlCar(CCar car)

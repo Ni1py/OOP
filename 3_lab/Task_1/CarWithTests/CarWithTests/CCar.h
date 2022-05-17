@@ -2,19 +2,9 @@
 
 using namespace std;
 
-enum class Direction { forward, back, standing };
+enum class Direction { back, standing, forward };
 
-namespace Limit {
-	enum
-	{
-		minSpeedBack = 0, maxSpeedBack = 20,
-		minSpeed1 = 0, maxSpeed1 = 30,
-		minSpeed2 = 20, maxSpeed2 = 50,
-		minSpeed3 = 30, maxSpeed3 = 60,
-		minSpeed4 = 30, maxSpeed4 = 90,
-		minSpeed5 = 50, maxSpeed5 = 150,
-	};
-}
+extern int Limit[6][2];
 
 class CCar
 {
@@ -33,7 +23,6 @@ public:
 	bool TurnOffEngine();
 	bool SetGear(int gear);
 	bool SetSpeed(int speed);
-
 private:
 	bool m_statusEngine;
 	Direction m_direction;

@@ -3,7 +3,7 @@
 #include <sstream>
 #include <assert.h>
 #include "CCar.h"
-#include "CControlCar.h";
+#include "CControlCar.h"
 
 using namespace std;
 
